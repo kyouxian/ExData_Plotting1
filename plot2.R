@@ -1,0 +1,10 @@
+library(tidyverse)
+path <- "D:/Datascience/Projects/DataScienceJHU-/household_power_consumption.txt"
+household_power_consumption <- read.table(path, header = TRUE, sep = ";")
+household_power_consumption$Date <- strptime(household_power_consumption$Date, format = "%d/%m/%Y")
+data <- subset(household_power_consumption, Date == "2007-02-01" | Date == "2007-02-02")
+data$Global_active_power <- as.numeric(data$Global_active_power)
+data$date_time <- ymd_hms(paste(data$Date, data$Time))
+png(filename = "plot2.png", width = 480, height = 480)
+plot(data$date_time,data$Global_active_power, type = "l",xlab = "Datetime", ylab = "Global Active Power (kilowatts)")
+dev.off()

@@ -1,0 +1,10 @@
+path <- "D:/Datascience/Projects/DataScienceJHU-/household_power_consumption.txt"
+household_power_consumption <- read.table(path, header = TRUE, sep = ";")
+household_power_consumption$Date <- strptime(household_power_consumption$Date, format = "%d/%m/%Y")
+household_power_consumption$Time <- strptime(household_power_consumption$Time, format = "%H:%M:%S")
+household_power_consumption$Time <- format(household_power_consumption$Time, "%H:%M:%S")
+data <- subset(household_power_consumption, Date == "2007-02-01" | Date == "2007-02-02")
+data$Global_active_power <- as.numeric(data$Global_active_power)
+png(filename = "plot1.png", width = 480, height = 480)
+hist(data$Global_active_power, xlab = "Global Active Power (kilowatts)", main = "Global Active Power", col = "red")
+dev.off()
